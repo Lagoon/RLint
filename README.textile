@@ -1,7 +1,7 @@
-h1. Gem Rlagoon
-	<p>Developed by Laboratório de Informática e Sistemas - Instituto Pedro Nunes</p>
-	<p>All Rights reserved to XLM, Serviços de Informática Lda.</p>
-	
+h1. Gem RLint - RoR Lagoon® Interface Connector
+
+Rlint is a connector module to LagoonSecurity application, which is an authentication/autorization system developed by XLM - Innovation & Technology. 
+It allows you to easily manage your applications authentication and autorization.
 
 h2. Index
 
@@ -41,7 +41,7 @@ h2. Index
 
 h2. Getting Started
 
-Rlagoon is a library for connect your application with XLM, Informática e Serviços Lagoon® Application API.
+Rlint is a library for connect your application with XLM, Informática e Serviços Lagoon® Application API.
 
 h3. Depedencies
 
@@ -56,261 +56,286 @@ gem "rlagoon" to your Gemfile and bundle install
 
 h3. Generate Lagoon configuration file
 
-<p>To add Rlagoon configuration file to your /config/initializers/ folder run:<br> "rails g rlagoon:config".<br>
-Update config options with credentials and uri provided by XLM, Informática e Serviços.</p>
+To add Rlint configuration file to your @/config/initializers/@ folder run: "rails g rlagoon:config".
+Update config options with credentials and uri provided by XLM - Innovation & Technology.
 
 h3. How to use?
 
-After add lagoon configuration file to /config/initializers folder you can access "load_lagoon" helper method inside your controllers.<br>
-You can add this before_filter to fetch always lagoon object on your ApplicationController.<br>
-<p>	before_filter :current_lagoon</p>
+After add lagoon configuration file to /config/initializers folder you can access "load_lagoon" helper method inside your controllers.
+You can add this before_filter to fetch always lagoon object on your ApplicationController.
+
+<pre>
+	before_filter :current_lagoon
 	
-<p>	def current_lagoon <br>
-		@lagoon = load_lagoon <br>
-	end <br>
-</p>
+	def current_lagoon
+		@lagoon = load_lagoon
+	end
+</pre>
 
-<p>In case of your application has contexts you need to send it with option {:context => "name_context"} on "load_lagoon" helper.<br>
-Example: load_lagoon({:context => "your_context"})</p>
+In case of your application has contexts you need to send it with option @{:context => "name_context"}@ on "load_lagoon" helper.
+Example: @load_lagoon({:context => "your_context"})@
 
-<p>You can use rlagoon to automatically authorize your controller actions. To use this function you can use "lagoon_authorization" helper method. This method authorize all of controller actions with "controller_name" and "action_name". In case of user try access non-authorized action, rlagoon will raise AccessDennied exception (see "Handle exceptions" section).</p>
-Example: lagoon_authorization(user_id, {:context => "your_context"})
+You can use rlint to automatically authorize your controller actions. To use this function you can use "lagoon_authorization" helper method. This method authorize all of controller actions with "controller_name" and "action_name". In case of user try access non-authorized action, rlint will raise AccessDennied exception (see "Handle exceptions" section).
+Example: @lagoon_authorization(user_id, {:context => "your_context"})@
 
-<p>	def current_lagoon <br>
-		@lagoon = load_lagoon <br>
+<pre>
+	def current_lagoon
+		@lagoon = load_lagoon
 		lagoon_authorization(user_id)
-	end <br>
-</p>
+	end
+</pre>
 
 h2. Operations
 
-List or Rlagoon operations you can use.<br>
-Note: "*" means that attribute is mandatory.<br>
-<p>
+List or Rlint operations you can use.
+Note: "*" means that attribute is mandatory.
+
 If any problem was detected on request will be raise an Exception (see section "Handle exceptions").
-</p>
 
 h3. Application operations
 
 h4. Show application "show_application()"
 
-Show your environment/application information.<br>
-This method output your environment/application information.<br>
-Output Example:<br>
+Show your environment/application information.
+This method output your environment/application information.
+Output Example:
+
+<pre>
 {:application =>
-	{:id=>5, <br>
-	 :application=>"application_name", <br>
-	 :modules=>["module_1","module_2"], <br>
-	 :activation_url=>"http://environment.activation.url.com", <br>
-	 :description=>"Environment description", <br>
-	 :name=>"environment_name"}<br>
+	{:id=>5, 
+	 :application=>"application_name", 
+	 :modules=>["module_1","module_2"], 
+	 :activation_url=>"http://environment.activation.url.com", 
+	 :description=>"Environment description", 
+	 :name=>"environment_name"}
 }
+</pre>
 
 h4. Update application "update_application(name,activation_url = nil,description = nil)"
 
-Update your environment/application information.<br>
-This method expects 4 attributes:<br>
-	
-* name* (string): application name. <br>
-* activation_url (string): environment activation URL. <br>
-* url (string): environment url. <br>
-* description (text): environment description. <br>
+Update your environment/application information.
+This method expects 4 attributes:
+
+* name* (string): application name.
+* activation_url (string): environment activation URL.
+* url (string): environment url.
+* description (text): environment description.
 
 h3. Context operations
 
 h4. Create context "create_context(context_name,activation_url = nil, url = nil, description = nil, copy_context = nil)"
 
-Create new context for your application<br>
-This method expects 5 attributes:<br>
+Create new context for your application
+This method expects 5 attributes:
 
-* name_context* (string): context name. <br>
-* activation_url (string): context activation URL. <br>
-* url (string): context URL. <br>
-* description (text): context description. <br>
+* name_context* (string): context name.
+* activation_url (string): context activation URL.
+* url (string): context URL.
+* description (text): context description.
 * copy_context (boolean): copy profiles from default context (true) or configure profiles later on Lagoon user interface (false).
 
-This method output your new context information. <br>
-Output Example:<br>
-{:context =>	<br>
-	{:id=>470, <br>
-	 :name=>"context_name", <br>
-	 :profiles=><br>
-		{"profile_1"=>{:id=>959, :description=>"Profile Description"}, <br>
-		 "profile_2"=>{:id=>960, :description=>"Profile 2 Description"}<br>
-		}, <br>
-	 :activation_url=>"http://context.activation.url/activations", <br>
-	 :description=>"Context Description", <br>
-	 :url=>"http://context.url.com"<br>
-	}<br>
-}<br>
+This method output your new context information.
+Output Example:
+<pre>
+{:context =>
+	{:id=>470,
+	 :name=>"context_name",
+	 :profiles=>
+		{"profile_1"=>{:id=>959, :description=>"Profile Description"},
+		 "profile_2"=>{:id=>960, :description=>"Profile 2 Description"}
+		},
+	 :activation_url=>"http://context.activation.url/activations",
+	 :description=>"Context Description",
+	 :url=>"http://context.url.com"
+	}
+}
+</pre>
 
 h4. Show context "show_context(context_name)"
 
-Show context information. <br>
-This method expects 1 attribute: <br>
+Show context information.
+This method expects 1 attribute:
 
-* name_context* (string): context name. <br>
+* name_context* (string): context name.
 
-This method output context information. <br>
-Output Example: <br>
-{:context => <br>
-	{:id=>470, <br>
-	 :name=>"context_name", <br>
-	 :profiles=> <br>
-		{"profile_1"=>{:id=>959, :description=>"Profile Description"}, <br>
-		 "profile_2"=>{:id=>960, :description=>"Profile 2 Description"} <br>
-		}, <br>
-	 :activation_url=>"http://context.activation.url/activations", <br>
-	 :description=>"Context Description", <br>
-	 :url=>"http://context.url.com"<br>
-	}<br>
-}<br>
+This method output context information.
+Output Example:
+<pre>
+{:context =>
+	{:id=>470,
+	 :name=>"context_name",
+	 :profiles=>
+		{"profile_1"=>{:id=>959, :description=>"Profile Description"},
+		 "profile_2"=>{:id=>960, :description=>"Profile 2 Description"}
+		},
+	 :activation_url=>"http://context.activation.url/activations",
+	 :description=>"Context Description",
+	 :url=>"http://context.url.com"
+	}
+}
+</pre>
 
 h4. List contexts "contexts()"
 
-List all environment contexts. <br>
-This method output all environment contexts information. <br>
-Output Example: <br>
-{:contexts => <br>
-	{"id_context_1"=> <br>
-		{:id=>13, <br>
-		 :name=>"default", <br>
-		 :profiles=> <br>
-			{"profile_1"=> {:id=>64, :description=>"Profile 1 description"}, <br>
-		 	 "profile_2"=> {:id=>63, :description=>"Partner Teste"}}, <br>
-		 :activation_url=>"", <br>
-		 :description=>"Context 1 description", <br>
-		 :url=>""}<br>
-	"id_context_2" =><br>
-		{:id=>13, <br>
-	 	 :name=>"default", <br>
-	 	 :profiles=><br>
-			{"profile_1"=> {:id=>64, :description=>"Profile 1 description"}, <br>
-	 	 	 "profile_2"=> {:id=>63, :description=>"Partner Teste"}}, <br>
-	 	 :activation_url=>"", <br>
-	 	 :description=>"Context 2 description", <br>
-	 	 :url=>""}<br>
+List all environment contexts. 
+This method output all environment contexts information. 
+Output Example: 
+<pre>
+{:contexts => 
+	{"id_context_1"=> 
+		{:id=>13, 
+		 :name=>"default", 
+		 :profiles=> 
+			{"profile_1"=> {:id=>64, :description=>"Profile 1 description"}, 
+		 	 "profile_2"=> {:id=>63, :description=>"Partner Teste"}}, 
+		 :activation_url=>"", 
+		 :description=>"Context 1 description", 
+		 :url=>""}
+	"id_context_2" =>
+		{:id=>13, 
+	 	 :name=>"default", 
+	 	 :profiles=>
+			{"profile_1"=> {:id=>64, :description=>"Profile 1 description"}, 
+	 	 	 "profile_2"=> {:id=>63, :description=>"Partner Teste"}}, 
+	 	 :activation_url=>"", 
+	 	 :description=>"Context 2 description", 
+	 	 :url=>""}
 	}
 }
+</pre>
 
 h4. Update context "update_context(context_name,new_name,activation_url = nil, url = nil, description = nil)"
 
-Update context of your application<br>
-This method expects 5 attributes:<br>
+Update context of your application
+This method expects 5 attributes:
 
-* context_name* (string): actual context name. <br>
-* name_context* (string): new context name. <br>
-* activation_url (string): context activation URL. <br>
-* url (string): context URL. <br>
-* description (text): context description. <br>
+* context_name* (string): actual context name. 
+* name_context* (string): new context name. 
+* activation_url (string): context activation URL. 
+* url (string): context URL. 
+* description (text): context description. 
 
-This method output context information updated. <br>
-Output Example:<br>
-{:context =>	<br>
-	{:id=>470, <br>
-	 :name=>"name_updated", <br>
-	 :profiles=><br>
-		{"profile_1"=>{:id=>959, :description=>"Profile Description"}, <br>
-		 "profile_2"=>{:id=>960, :description=>"Profile 2 Description"}<br>
-		}, <br>
-	 :activation_url=>"http://context.activation.url/activations", <br>
-	 :description=>"Context Description", <br>
-	 :url=>"http://context.url.com"<br>
-	}<br>
-}<br>
-
+This method output context information updated. 
+Output Example:
+<pre>
+{:context =>	
+	{:id=>470, 
+	 :name=>"name_updated", 
+	 :profiles=>
+		{"profile_1"=>{:id=>959, :description=>"Profile Description"}, 
+		 "profile_2"=>{:id=>960, :description=>"Profile 2 Description"}
+		}, 
+	 :activation_url=>"http://context.activation.url/activations", 
+	 :description=>"Context Description", 
+	 :url=>"http://context.url.com"
+	}
+}
+</pre>
 
 h4. Delete context "delete_context(context_name)"
 
-Delete context of your application<br>
-This method expects 1 attribute:<br>
+Delete context of your application
+This method expects 1 attribute:
 
-* name_context* (string): context name. <br>
+* name_context* (string): context name. 
 
-This method output operation success. <br>
-Output example:<br>
-{:success => true}
+This method output operation success. 
+Output example:
+@{:success => true}@
 
 h3. Permission operations "permissions(id_u)"
 
-Get user actual permissions from Lagoon®. <br>
-This method expects 1 attribute: <br>
+Get user actual permissions from Lagoon®. 
+This method expects 1 attribute: 
 
 * id_u* (integer): user id.
 
-This method output current user permissions. <br>
-Output example: <br>
-
+This method output current user permissions. 
+Output example: 
+<pre>
+{"idi_manager_test"=>{:actions=>{"managers"=>{:action_points=>["index", "show"]}}}}
+{:permissions =>{
+		"idi_manager_test"=>{:actions => {"managers" => {:action_points => ["index", "show"]}}}
+		}
+}
+</pre>
 
 h3. Profile operations "profiles()"
 
-Get environment/application profiles. <br>
-This method output all environment/application profiles. <br>
-Output example: <br>
-{:profiles =>{<br>
-		"profile_1"=>{:id=>64, :description=>"Profile 1 description"}, <br>
-		"profile_2"=>{:id=>63, :description=>"Profile 2 description"}<br>
-		}<br>
-}<br>
+Get environment/application profiles. 
+This method output all environment/application profiles. 
+Output example:
+<pre>
+{:profiles =>{
+		"profile_1"=>{:id=>64, :description=>"Profile 1 description"}, 
+		"profile_2"=>{:id=>63, :description=>"Profile 2 description"}
+		}
+}
+</pre>
 
 h3. User operations
 
 h4. Create user "create_user(login, email, name, ghost = false, profiles = nil)"
 
-Create new user. <br>
-This method expects 5 attributes:<br>
+Create new user. 
+This method expects 5 attributes:
 
-* login* (string): user login. <br>
-* email* (string): user email. <br>
-* name* (string): user name. <br>
-* ghost* (boolean): if your want create a user without send activation notification (true). <br>
-* profiles (text): context description. <br>
+* login* (string): user login. 
+* email* (string): user email. 
+* name* (string): user name. 
+* ghost* (boolean): if your want create a user without send activation notification (true). 
+* profiles (text): context description. 
 
-This method output your new user information. <br>
-Output Example:<br>
-{:user =>	<br>
-	{:id=>160, <br>
-	 :active=>false, <br>
-	 :ghost=>false, <br>
-	 :login=>"login", <br>
-	 :name=>"user name", <br>
-	 :email=>"user@email.com", <br>
-	 :profiles=>{<br>
-			"profile_1"=>{:id=>1097, :description=>"Profile description"}<br>
-				}, <br>
-	 :token=>"tokenassdasdwq2213123sadsx"<br>
-	} <br>
-}<br>
+This method output your new user information. 
+Output Example:
+<pre>
+{:user =>	
+	{:id=>160, 
+	 :active=>false, 
+	 :ghost=>false, 
+	 :login=>"login", 
+	 :name=>"user name", 
+	 :email=>"user@email.com", 
+	 :profiles=>{
+			"profile_1"=>{:id=>1097, :description=>"Profile description"}
+				}, 
+	 :token=>"tokenassdasdwq2213123sadsx"
+	} 
+}
+</pre>
 
 h4. Show user "show_user(id_u)"
 
-Show user information. <br>
-This method expects 1 attribute: <br>
+Show user information. 
+This method expects 1 attribute: 
 
-* u_id* (string): user id. <br>
+* u_id* (string): user id. 
 
-This method output your user (u_id) information. <br>
-Output Example:<br>
-{:user =>	<br>
-	{:id=>160, <br>
-	 :active=>false, <br>
-	 :ghost=>false, <br>
-	 :login=>"login", <br>
-	 :name=>"user name", <br>
-	 :email=>"user@email.com", <br>
-	 :profiles=>{<br>
-			"profile_1"=>{:id=>1097, :description=>"Profile description"}<br>
-				}, <br>
-	 :token=>nil<br>
-	} <br>
-}<br>
+This method output your user (u_id) information. 
+Output Example:
+<pre>
+{:user =>	
+	{:id=>160, 
+	 :active=>false, 
+	 :ghost=>false, 
+	 :login=>"login", 
+	 :name=>"user name", 
+	 :email=>"user@email.com", 
+	 :profiles=>{
+			"profile_1"=>{:id=>1097, :description=>"Profile description"}
+				}, 
+	 :token=>nil
+	} 
+}
+</pre>
 
 h4. List users "users()"
 
-List all users. <br>
-This method output all users information. <br>
-Output Example: <br>
-{:users => <br>
+List all users. 
+This method output all users information. 
+Output Example:
+<pre>
+{:users => 
 	{"user_1_login"=>
 		{:id=>164, 
 		 :active=>false, 
@@ -336,170 +361,183 @@ Output Example: <br>
 		 :token=>nil}
 	}
 }
+</pre>
 
 h4. Update user "update_user(id_u, login, email, name, ghost = nil, profiles = nil)"
 
-Update user information.<br>
-This method expects 5 attributes:<br>
+Update user information.
+This method expects 5 attributes:
 
-* id_u* (integer): user id. <br>
-* login* (string): user login. <br>
-* email* (string): user email. <br>
-* name* (string): user name. <br>
-* ghost* (boolean): if your want create a user without send activation notification (true). <br>
-* profiles (text): context description. <br>
+* id_u* (integer): user id. 
+* login* (string): user login. 
+* email* (string): user email. 
+* name* (string): user name. 
+* ghost* (boolean): if your want create a user without send activation notification (true). 
+* profiles (text): context description. 
 
 
-This method output user information updated. <br>
-Output Example:<br>
-{:user =>	<br>
-	{:id=>160, <br>
-	 :active=>false, <br>
-	 :ghost=>false, <br>
-	 :login=>"login", <br>
-	 :name=>"user name updated", <br>
-	 :email=>"user@email.com", <br>
-	 :profiles=>{<br>
-			"profile_1"=>{:id=>1097, :description=>"Profile description"}<br>
-				}, <br>
-	 :token=>nil<br>
-	} <br>
-}<br>
+This method output user information updated. 
+Output Example:
+<pre>
+{:user =>	
+	{:id=>160, 
+	 :active=>false, 
+	 :ghost=>false, 
+	 :login=>"login", 
+	 :name=>"user name updated", 
+	 :email=>"user@email.com", 
+	 :profiles=>{
+			"profile_1"=>{:id=>1097, :description=>"Profile description"}
+				}, 
+	 :token=>nil
+	} 
+}
+</pre>
 
 h4. Register user "register(password,token)"
 
-Register user via activation_url. <br>
-This method expects 2 attributes: <br>
+Register user via activation_url. 
+This method expects 2 attributes: 
 
-* password* (string): user password. <br>
-* token* (string): token sent to user via activation email. <br>
+* password* (string): user password. 
+* token* (string): token sent to user via activation email. 
 
-This method output user information. <br>
-Output Example:<br>
-{:user =>	<br>
-	{:id=>160, <br>
-	 :active=>true, <br>
-	 :ghost=>false, <br>
-	 :login=>"login", <br>
-	 :name=>"user name updated", <br>
-	 :email=>"user@email.com", <br>
-	 :profiles=>{<br>
-			"profile_1"=>{:id=>1097, :description=>"Profile description"}<br>
-				}, <br>
-	 :token=>nil<br>
-	} <br>
-}<br>
+This method output user information. 
+Output Example:
+<pre>
+{:user =>	
+	{:id=>160, 
+	 :active=>true, 
+	 :ghost=>false, 
+	 :login=>"login", 
+	 :name=>"user name updated", 
+	 :email=>"user@email.com", 
+	 :profiles=>{
+			"profile_1"=>{:id=>1097, :description=>"Profile description"}
+				}, 
+	 :token=>nil
+	} 
+}
+</pre>
 
 h4. Deactivate user "deactivation(id_u)"
 
-Deactivate user account. <br>
-This method expects 1 attribute: <br>
+Deactivate user account. 
+This method expects 1 attribute: 
 
-* id_u* (integer): user password. <br>
+* id_u* (integer): user password. 
 
-This method output user information. <br>
-Output Example:<br>
-{:user =>	<br>
-	{:id=>160, <br>
-	 :active=>false, <br>
-	 :ghost=>false, <br>
-	 :login=>"login", <br>
-	 :name=>"user name updated", <br>
-	 :email=>"user@email.com", <br>
-	 :profiles=>{<br>
-			"profile_1"=>{:id=>1097, :description=>"Profile description"}<br>
-				}, <br>
-	 :token=>nil<br>
-	} <br>
-}<br>
+This method output user information. 
+Output Example:
+<pre>
+{:user =>	
+	{:id=>160, 
+	 :active=>false, 
+	 :ghost=>false, 
+	 :login=>"login", 
+	 :name=>"user name updated", 
+	 :email=>"user@email.com", 
+	 :profiles=>{
+			"profile_1"=>{:id=>1097, :description=>"Profile description"}
+				}, 
+	 :token=>nil
+	} 
+}
+</pre>
 
 h4. Activate user "activation(id_u)"
 
-Activate user account. <br>
-This method expects 1 attribute: <br>
+Activate user account. 
+This method expects 1 attribute: 
 
-* id_u* (integer): user password. <br>
+* id_u* (integer): user password. 
 
-This method output user information. <br>
-Output Example:<br>
-{:user =>	<br>
-	{:id=>160, <br>
-	 :active=>true, <br>
-	 :ghost=>false, <br>
-	 :login=>"login", <br>
-	 :name=>"user name updated", <br>
-	 :email=>"user@email.com", <br>
-	 :profiles=>{<br>
-			"profile_1"=>{:id=>1097, :description=>"Profile description"}<br>
-				}, <br>
-	 :token=>nil<br>
-	} <br>
-}<br>
+This method output user information. 
+Output Example:
+<pre>
+{:user =>	
+	{:id=>160, 
+	 :active=>true, 
+	 :ghost=>false, 
+	 :login=>"login", 
+	 :name=>"user name updated", 
+	 :email=>"user@email.com", 
+	 :profiles=>{
+			"profile_1"=>{:id=>1097, :description=>"Profile description"}
+				}, 
+	 :token=>nil
+	} 
+}
+</pre>
 
 h4. Reactivate user "reactivation(id_u)"
 
-Reactivate user account and send activation email. <br>
-This method expects 1 attribute: <br>
+Reactivate user account and send activation email. 
+This method expects 1 attribute: 
 
-* id_u* (integer): user password. <br>
+* id_u* (integer): user password. 
 
-This method output user information. <br>
-Output Example:<br>
-{:user =>	<br>
-	{:id=>160, <br>
-	 :active=>false, <br>
-	 :ghost=>false, <br>
-	 :login=>"login", <br>
-	 :name=>"user name updated", <br>
-	 :email=>"user@email.com", <br>
-	 :profiles=>{<br>
-			"profile_1"=>{:id=>1097, :description=>"Profile description"}<br>
-				}, <br>
-	 :token=>nil<br>
-	} <br>
-}<br>
+This method output user information. 
+Output Example:
+<pre>
+{:user =>	
+	{:id=>160, 
+	 :active=>false, 
+	 :ghost=>false, 
+	 :login=>"login", 
+	 :name=>"user name updated", 
+	 :email=>"user@email.com", 
+	 :profiles=>{
+			"profile_1"=>{:id=>1097, :description=>"Profile description"}
+				}, 
+	 :token=>nil
+	} 
+}
+</pre>
 
 h4. Login "login(login,password)"
 
-User login. <br>
-This method expects 2 attributes: <br>
+User login. 
+This method expects 2 attributes: 
 
-* login* (string): user login. <br>
-* password* (string): user password. <br>
+* login* (string): user login. 
+* password* (string): user password. 
 
-This method output user information and permissions. <br>
-{:user=>{ <br>
-		:id=>10, <br>
-		:active=>true, <br>
-		:ghost=>false, <br>
-		:login=>"user@mail.com", <br>
-		:name=>"name_user", <br>
-		:email=>"user@mail.com",<br>
-		:profiles=>{"name_profile"=> <br>
-						{:actions=>{<br>
-							"action_1"=>{:action_points=>["ap_1","ap2"]},<br>
-							"action_2"=>{:action_points=>["ap_1","ap2"]}, <br>
-							}<br>
-					"name_profile_2"=><br>
-						{:actions=>{<br>
-							"action_3"=>{:action_points=>["ap_1","ap2"]},<br>
-							"action_4"=>{:action_points=>["ap_1","ap2"]},<br>
-							}<br>
-						}<br>
-					}, <br>
-		:last_login=>1326815905000<br>
-		}<br>
-}<br>
+This method output user information and permissions.
+<pre>
+{:user=>{ 
+		:id=>10, 
+		:active=>true, 
+		:ghost=>false, 
+		:login=>"user@mail.com", 
+		:name=>"name_user", 
+		:email=>"user@mail.com",
+		:profiles=>{"name_profile"=> 
+						{:actions=>{
+							"action_1"=>{:action_points=>["ap_1","ap2"]},
+							"action_2"=>{:action_points=>["ap_1","ap2"]}, 
+							}
+					"name_profile_2"=>
+						{:actions=>{
+							"action_3"=>{:action_points=>["ap_1","ap2"]},
+							"action_4"=>{:action_points=>["ap_1","ap2"]},
+							}
+						}
+					}, 
+		:last_login=>1326815905000
+		}
+}
+</pre>
 
 h4. Logout "logout(id_u)"
 
-User logout. <br>
-This method expects 1 attribute: <br>
+User logout. 
+This method expects 1 attribute: 
 
-* id_u* (integer): user id. <br>
+* id_u* (integer): user id. 
 
-This method output operation success. <br>
-{:success=> true}
+This method output operation success. 
+@{:success=> true}@
 
 
 h2. Handle exceptions
@@ -511,35 +549,40 @@ If credentials present on config file, or first connection to Lagoon® fails, a 
 
 h3. ClientError
 
-<p>If any problem was detected on client request (ex: wrong attributes sent) Lagoon® will sent a client error on http status code. Rlagoon will raise a Rlagoon::ClientError exception. You can catch this and modify it behavior in ApplicationController.</p>
-
-<p>class ApplicationController < ActionController::Base <br>
-	rescue from Rlagoon::ClientError do |exception|<br>
-		redirect_to root_url, :alert => "some alert"<br>
-	end<br>
-end<br>
-</p>
+If any problem was detected on client request (ex: wrong attributes sent) Lagoon® will sent a client error on http status code. Rlagoon will raise a Rlagoon::ClientError exception. You can catch this and modify it behavior in ApplicationController.
+<pre>
+class ApplicationController < ActionController::Base 
+	rescue from Rlagoon::ClientError do |exception|
+		redirect_to root_url, :alert => "some alert"
+	end
+end
+</pre>
 
 h3. ServerError
 
-<p>If any problem occur on server (ex: internal server error) Rlagoon will raise a Rlagoon::ServerError exception. You can catch this and modify it behavior in ApplicationController</p>
+If any problem occur on server (ex: internal server error) Rlint will raise a Rlagoon::ServerError exception. You can catch this and modify it behavior in ApplicationController
 
-<p>class ApplicationController < ActionController::Base <br>
-	rescue from Rlagoon::ServerError do |exception|<br>
-		redirect_to root_url, :alert => "some alert"<br>
-	end<br>
-end<br>
-</p>
+<pre>
+class ApplicationController < ActionController::Base 
+	rescue from Rlagoon::ServerError do |exception|
+		redirect_to root_url, :alert => "some alert"
+	end
+end
+</pre>
 
 
 h3. AccessDenied
 
-<p>If you user "load_authorization" helper method and current user cannot access some action, a Rlagoon::AccessDenied exception will be raised. You can catch this and modify it behavior in ApplicationController</p>
+If you user "load_authorization" helper method and current user cannot access some action, a Rlagoon::AccessDenied exception will be raised. You can catch this and modify it behavior in ApplicationController
 
-<p>
-class ApplicationController < ActionController::Base<br>
-	rescue from Rlagoon::AccessDenied do |exception|<br>
-		redirect_to root_url, :alert => "some alert"<br>
-	end<br>
-end<br>
-</p>
+<pre>
+class ApplicationController < ActionController::Base
+	rescue from Rlagoon::AccessDenied do |exception|
+		redirect_to root_url, :alert => "some alert"
+	end
+end
+</pre>
+
+enjoy ;)
+
+For more info, please visit LagoonSecurity website!
