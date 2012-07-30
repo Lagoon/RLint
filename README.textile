@@ -3,45 +3,9 @@ h1. Gem RLint - RoR Lagoon® Interface Connector
 Rlint is a connector module to LagoonSecurity application, which is an authentication/autorization system developed by XLM - Innovation & Technology. 
 It allows you to easily manage your applications authentication and autorization.
 
-h2. Index
-
-# Getting Started
-## Dependencies
-## Instalation
-## Generate Lagoon configuration file
-## How to use?
-# Operations
-## Application operations
-### Show application
-### Update application
-## Context operations
-### Create context
-### Show context
-### List contexts
-### Update context
-### Delete context
-## Permission operations
-## Profile operations
-## User operations
-### Create user
-### Show user
-### List users
-### Update user
-### Register user
-### Deactivate user
-### Activate user
-### Reactivate user
-### Login
-### Logout
-# Handle exceptions
-## SanityProblem
-## ClientError
-## ServerError
-## Access Denied
-
 h2. Getting Started
 
-Rlint is a library for connect your application with XLM, Informática e Serviços Lagoon® Application API.
+Rlint is a library for connect your application with XLM - Innovation & Technology Lagoon® Application RESTful API.
 
 h3. Depedencies
 
@@ -52,24 +16,26 @@ h3. Depedencies
 
 h3. Instalation
 
-gem "rlagoon" to your Gemfile and bundle install
+First add the gem to your development environment and run the @bundle@ command to install it.
+
+@gem "rlagoon"@
 
 h3. Generate Lagoon configuration file
 
-To add Rlint configuration file to your @/config/initializers/@ folder run: "rails g rlagoon:config".
+To add Rlint configuration file to your @/config/initializers/@ folder run @rails g rlagoon:config@.
 Update config options with credentials and uri provided by XLM - Innovation & Technology.
 
 h3. How to use?
 
-After add lagoon configuration file to /config/initializers folder you can access "load_lagoon" helper method inside your controllers.
+After add lagoon configuration file to @/config/initializers@ folder you can access "load_lagoon" helper method inside your controllers.
 You can add this before_filter to fetch always lagoon object on your ApplicationController.
 
 <pre>
-	before_filter :current_lagoon
+before_filter :current_lagoon
 	
-	def current_lagoon
-		@lagoon = load_lagoon
-	end
+def current_lagoon
+	@lagoon = load_lagoon
+end
 </pre>
 
 In case of your application has contexts you need to send it with option @{:context => "name_context"}@ on "load_lagoon" helper.
@@ -79,10 +45,10 @@ You can use rlint to automatically authorize your controller actions. To use thi
 Example: @lagoon_authorization(user_id, {:context => "your_context"})@
 
 <pre>
-	def current_lagoon
-		@lagoon = load_lagoon
-		lagoon_authorization(user_id)
-	end
+def current_lagoon
+	@lagoon = load_lagoon
+	lagoon_authorization(user_id)
+end
 </pre>
 
 h2. Operations
@@ -136,6 +102,7 @@ This method expects 5 attributes:
 
 This method output your new context information.
 Output Example:
+
 <pre>
 {:context =>
 	{:id=>470,
@@ -160,6 +127,7 @@ This method expects 1 attribute:
 
 This method output context information.
 Output Example:
+
 <pre>
 {:context =>
 	{:id=>470,
@@ -179,7 +147,8 @@ h4. List contexts "contexts()"
 
 List all environment contexts. 
 This method output all environment contexts information. 
-Output Example: 
+Output Example:
+
 <pre>
 {:contexts => 
 	{"id_context_1"=> 
@@ -217,6 +186,7 @@ This method expects 5 attributes:
 
 This method output context information updated. 
 Output Example:
+
 <pre>
 {:context =>	
 	{:id=>470, 
@@ -251,7 +221,8 @@ This method expects 1 attribute:
 * id_u* (integer): user id.
 
 This method output current user permissions. 
-Output example: 
+Output example:
+
 <pre>
 {"idi_manager_test"=>{:actions=>{"managers"=>{:action_points=>["index", "show"]}}}}
 {:permissions =>{
@@ -265,6 +236,7 @@ h3. Profile operations "profiles()"
 Get environment/application profiles. 
 This method output all environment/application profiles. 
 Output example:
+
 <pre>
 {:profiles =>{
 		"profile_1"=>{:id=>64, :description=>"Profile 1 description"}, 
@@ -288,6 +260,7 @@ This method expects 5 attributes:
 
 This method output your new user information. 
 Output Example:
+
 <pre>
 {:user =>	
 	{:id=>160, 
@@ -313,6 +286,7 @@ This method expects 1 attribute:
 
 This method output your user (u_id) information. 
 Output Example:
+
 <pre>
 {:user =>	
 	{:id=>160, 
@@ -334,6 +308,7 @@ h4. List users "users()"
 List all users. 
 This method output all users information. 
 Output Example:
+
 <pre>
 {:users => 
 	{"user_1_login"=>
@@ -378,6 +353,7 @@ This method expects 5 attributes:
 
 This method output user information updated. 
 Output Example:
+
 <pre>
 {:user =>	
 	{:id=>160, 
@@ -404,6 +380,7 @@ This method expects 2 attributes:
 
 This method output user information. 
 Output Example:
+
 <pre>
 {:user =>	
 	{:id=>160, 
@@ -429,6 +406,7 @@ This method expects 1 attribute:
 
 This method output user information. 
 Output Example:
+
 <pre>
 {:user =>	
 	{:id=>160, 
@@ -454,6 +432,7 @@ This method expects 1 attribute:
 
 This method output user information. 
 Output Example:
+
 <pre>
 {:user =>	
 	{:id=>160, 
@@ -479,6 +458,7 @@ This method expects 1 attribute:
 
 This method output user information. 
 Output Example:
+
 <pre>
 {:user =>	
 	{:id=>160, 
@@ -504,6 +484,7 @@ This method expects 2 attributes:
 * password* (string): user password. 
 
 This method output user information and permissions.
+
 <pre>
 {:user=>{ 
 		:id=>10, 
@@ -550,6 +531,7 @@ If credentials present on config file, or first connection to Lagoon® fails, a 
 h3. ClientError
 
 If any problem was detected on client request (ex: wrong attributes sent) Lagoon® will sent a client error on http status code. Rlagoon will raise a Rlagoon::ClientError exception. You can catch this and modify it behavior in ApplicationController.
+
 <pre>
 class ApplicationController < ActionController::Base 
 	rescue from Rlagoon::ClientError do |exception|
