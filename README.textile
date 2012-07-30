@@ -5,7 +5,7 @@ It allows you to easily manage your applications authentication and autorization
 
 h2. Getting Started
 
-Rlint is a library for connect your application with XLM - Innovation & Technology Lagoon® Application RESTful API.
+Rlint is a library to connect your application with XLM - Innovation & Technology Lagoon® Application RESTful API.
 
 h3. Depedencies
 
