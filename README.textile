@@ -213,7 +213,9 @@ This method output operation success.
 Output example:
 @{:success => true}@
 
-h3. Permission operations "permissions(id_u)"
+h3. Permission operations
+
+h4. Permission operations "permissions(id_u)"
 
 Get user actual permissions from Lagoon®. 
 This method expects 1 attribute: 
@@ -231,7 +233,9 @@ Output example:
 }
 </pre>
 
-h3. Profile operations "profiles()"
+h3. Profile operations
+
+h4. Profile operations "profiles()"
 
 Get environment/application profiles. 
 This method output all environment/application profiles. 
