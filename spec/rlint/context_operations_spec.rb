@@ -4,16 +4,16 @@ require 'spec_helper'
 describe "On context operations module" do
   
   before(:each) do
-    Rlagoon.config = {
+    Rlint.config = {
             :base_uri => @lagoon_credentials[:url]  , #Write lagoon base URI
             :username => @lagoon_credentials[:username], #Write lagoon username
             :password => @lagoon_credentials[:password], # Write Lagoon password
             :switch => true
     }
-    @lagoon = Rlagoon.load_lagoon
+    @lagoon = Rlint.load_lagoon
   end
   
-  it {Rlagoon.load_lagoon.should be_kind_of(Rlagoon::Lagoon)}
+  it {Rlint.load_lagoon.should be_kind_of(Rlint::Lagoon)}
     
   
   describe "try context creation" do
@@ -36,10 +36,10 @@ describe "On context operations module" do
       it "should raise ClientError exception" do
         begin
           @lagoon.create_context("","http://test.lvh.me:3000/activations","http://test.lvh.me:3000","Description",true)
-        rescue Rlagoon::ClientError => e
+        rescue Rlint::ClientError => e
           e.message.should == "#{e.code} - Client Error"
         else
-          fail "Expected Rlagoon::ClientError exception to be raised."
+          fail "Expected Rlint::ClientError exception to be raised."
         end
       end
     end    
@@ -79,10 +79,10 @@ describe "On context operations module" do
     it "should raise ClientError exception" do
       begin
         @lagoon.show_context("test2")
-      rescue Rlagoon::ClientError => e
+      rescue Rlint::ClientError => e
         e.message.should == "#{e.code} - Client Error"
       else
-        fail "Expected Rlagoon::ClientError exception to be raised."
+        fail "Expected Rlint::ClientError exception to be raised."
       end
     end
   end
@@ -96,10 +96,10 @@ describe "On context operations module" do
       it "should raise ClientError exception" do
         begin
           @lagoon.update_context("test","","http://test.lvh.me:3000/activations","http://test.lvh.me:3000","Description")
-        rescue Rlagoon::ClientError => e
+        rescue Rlint::ClientError => e
           e.message.should == "#{e.code} - Client Error"
         else
-          fail "Expected Rlagoon::ClientError exception to be raised."
+          fail "Expected Rlint::ClientError exception to be raised."
         end
       end
       after do

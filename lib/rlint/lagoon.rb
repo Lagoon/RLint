@@ -1,4 +1,4 @@
-module Rlagoon
+module Rlint
   
   class Lagoon
     include ApplicationOperations
@@ -20,8 +20,8 @@ module Rlagoon
     #Lagoon initialization with default_options submitted
     #If exist context add attribute @context
     def initialize(options)       
-      self.class.base_uri Rlagoon.base_uri
-      self.class.basic_auth Rlagoon.username, Rlagoon.password
+      self.class.base_uri Rlint.base_uri
+      self.class.basic_auth Rlint.username, Rlint.password
       if !options.nil? and !options[:context].blank?
         @context = options[:context] 
       end
@@ -33,7 +33,7 @@ module Rlagoon
     
     # =>  
     # => SANITY_CHECK
-    # => This method execute sanity test to credentials submitted on Rlagoon.config
+    # => This method execute sanity test to credentials submitted on Rlint.config
     # => Input options:
     # =>        :version - to verify version compatibility
     # => Output (Hash):
@@ -71,12 +71,12 @@ module Rlagoon
 
     #Return if lagoon communication is on
     def on?
-      Rlagoon.switch ? true : false 
+      Rlint.switch ? true : false 
     end
     
     #Return if lagoon communication is off
     def off?
-      Rlagoon.switch ? false : true
+      Rlint.switch ? false : true
     end
     
     def aliased_actions
@@ -167,11 +167,11 @@ module Rlagoon
        end
     
     def say_info(text)
-      logger.info "[LAGOON - INFO] "+text.to_s unless !Rlagoon.env.nil?
+      logger.info "[LAGOON - INFO] "+text.to_s unless !Rlint.env.nil?
     end
     
     def say_exception(text)
-      logger.error "[LAGOON - EXCEPTION] "+text.to_s unless !Rlagoon.env.nil?
+      logger.error "[LAGOON - EXCEPTION] "+text.to_s unless !Rlint.env.nil?
     end
   end
 end

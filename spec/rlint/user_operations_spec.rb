@@ -3,7 +3,7 @@ require 'spec_helper'
 describe " On User operations module" do
   
   before(:each) do
-    Rlagoon.config = {
+    Rlint.config = {
             :base_uri => @lagoon_credentials[:url]  , #Write lagoon base URI
             :username => @lagoon_credentials[:username], #Write lagoon username
             :password => @lagoon_credentials[:password], # Write Lagoon password
@@ -13,7 +13,7 @@ describe " On User operations module" do
   
   describe "with context" do
     before(:each) do
-      @lagoon = Rlagoon.load_lagoon({:context => "test"})
+      @lagoon = Rlint.load_lagoon({:context => "test"})
       @lagoon.create_context("test","http://test.lvh.me:3000/activations","http://test.lvh.me:3000","Description",true)
     end
     describe "try user creation" do
@@ -33,10 +33,10 @@ describe " On User operations module" do
         it "should raise ClientError exception" do
           begin
             @lagoon.create_user("", "mindupsoft@gmail.com", "MindUpSoft", false ,["idi_manager_test"])[:user]
-          rescue Rlagoon::ClientError => e
+          rescue Rlint::ClientError => e
             e.message.should == "#{e.code} - Client Error"
           else
-            fail "Expected Rlagoon::ClientError exception to be raised."
+            fail "Expected Rlint::ClientError exception to be raised."
           end
         end
       end
@@ -90,10 +90,10 @@ describe " On User operations module" do
         it "should raise ClientError exception" do
           begin
             @lagoon.register("password","asdasff<f123sca234qczs")
-          rescue Rlagoon::ClientError => e
+          rescue Rlint::ClientError => e
             e.message.should == "#{e.code} - Client Error"
           else
-            fail "Expected Rlagoon::ClientError exception to be raised."
+            fail "Expected Rlint::ClientError exception to be raised."
           end
         end
       end
@@ -145,10 +145,10 @@ describe " On User operations module" do
           response = @lagoon.create_user("mindupsoft@gmail.com", "mindupsoft@gmail.com", "MindUpSoft", false ,["idi_manager_test"])[:user]
           resp = @lagoon.register("password",response[:token])[:user]
           @lagoon.reactivation(resp[:id])[:user]
-        rescue Rlagoon::ClientError => e
+        rescue Rlint::ClientError => e
           e.message.should == "#{e.code} - Client Error"
         else
-          fail "Expected Rlagoon::ClientError exception to be raised."
+          fail "Expected Rlint::ClientError exception to be raised."
         end
       end
     end
@@ -190,10 +190,10 @@ describe " On User operations module" do
           response = @lagoon.create_user("mindupsoft@gmail.com", "mindupsoft@gmail.com", "MindUpSoft", false ,["idi_manager_test"])[:user]
           begin
             resp = @lagoon.update_user(response[:id],"", "mindupsoft@gmail.com", "mindup")[:user]
-          rescue Rlagoon::ClientError => e
+          rescue Rlint::ClientError => e
             e.message.should == "#{e.code} - Client Error"
           else
-            fail "Expected Rlagoon::ClientError exception to be raised."
+            fail "Expected Rlint::ClientError exception to be raised."
           end        
         end
       end

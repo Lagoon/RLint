@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rlagoon (0.1.0)
+    rlint (0.1.1)
       httparty (= 0.7.8)
 
 GEM
@@ -93,5 +93,5 @@ PLATFORMS
 DEPENDENCIES
   httparty (= 0.7.8)
   rails (~> 3.0.9)
-  rlagoon!
+  rlint!
   rspec (~> 2.6.0)

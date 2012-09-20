@@ -1,4 +1,4 @@
-module Rlagoon
+module Rlint
   module ContextOperations
     
     def contexts

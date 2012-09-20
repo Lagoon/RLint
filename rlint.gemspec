@@ -1,15 +1,15 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "rlagoon/version"
+require "rlint/version"
 
 Gem::Specification.new do |s|
-  s.name        = "rlagoon"
-  s.version     = Rlagoon::VERSION
-  s.authors     = ["balmeida"]
-  s.email       = ["balmeida@ipn.pt"]
+  s.name        = "rlint"
+  s.version     = Rlint::VERSION
+  s.authors     = ["dpeixoto"]
+  s.email       = ["dpeixoto@xlm.pt"]
   s.homepage    = ""
   s.summary     = %q{This gem helps integrate your application with Lagoon API}
-  s.description = %q{This gem helps integrate your application with Lagoon API v0.0.1}
+  s.description = %q{This gem helps integrate your application with Lagoon API v1}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

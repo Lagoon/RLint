@@ -1,21 +1,21 @@
 require 'spec_helper'
 
-describe Rlagoon::Lagoon do
+describe Rlint::Lagoon do
   before(:each) do
-    Rlagoon.config = {
+    Rlint.config = {
             :base_uri => @lagoon_credentials[:url] , #Write lagoon base URI
-            :username => "OQw2BHjfTgGnXx", #Write lagoon username
+            :username => "JPnqo0s099ZfgiN", #Write lagoon username
             :password => "test", # Write Lagoon password
             :switch => true
     }
 
   end
   
-  it {Rlagoon.load_lagoon.should be_kind_of(Rlagoon::Lagoon)}
+  it {Rlint.load_lagoon.should be_kind_of(Rlint::Lagoon)}
   
   describe "if lagoon active" do
     before do
-      @lagoon = Rlagoon.load_lagoon
+      @lagoon = Rlint.load_lagoon
     end
     
     it "the object should not be nil" do
@@ -29,7 +29,7 @@ describe Rlagoon::Lagoon do
   
   describe "if lagoon created without context" do
     before do
-      @lagoon = Rlagoon.load_lagoon
+      @lagoon = Rlint.load_lagoon
     end
     
     it "should context attribute be nil" do
@@ -39,7 +39,7 @@ describe Rlagoon::Lagoon do
   
   describe "if lagoon created with context" do
     before do
-      @lagoon = Rlagoon.load_lagoon({:context => "default"})
+      @lagoon = Rlint.load_lagoon({:context => "default"})
     end
     
     it "should context attribute not be nil" do
@@ -50,7 +50,7 @@ describe Rlagoon::Lagoon do
   
   describe "try lagoon methods" do
     before do
-      @lagoon = Rlagoon.load_lagoon
+      @lagoon = Rlint.load_lagoon
     end
     
     # describe "identifier" do
@@ -79,21 +79,21 @@ describe Rlagoon::Lagoon do
     describe "with_context" do
       describe "context sent" do
         before do
-          @lagoon = Rlagoon.load_lagoon({:context => "default"})
+          @lagoon = Rlint.load_lagoon({:context => "default"})
         end
         
         it "should return context to url" do
-          Rlagoon::Lagoon.publicize_methods do
+          Rlint::Lagoon.publicize_methods do
             @lagoon.with_context.should == "/contexts/default"
           end
         end
       end
       describe "wihout sent context" do
         before do
-          @lagoon = Rlagoon.load_lagoon
+          @lagoon = Rlint.load_lagoon
         end
         it "should return nothing" do
-          Rlagoon::Lagoon.publicize_methods do
+          Rlint::Lagoon.publicize_methods do
             @lagoon.with_context.should == ""
           end
         end
@@ -102,58 +102,58 @@ describe Rlagoon::Lagoon do
     
     describe "handle_code" do
       it "should raise ClientError exception if code received 400" do
-        Rlagoon::Lagoon.publicize_methods do
+        Rlint::Lagoon.publicize_methods do
           begin
             @lagoon.handle_code("400","test","test")
           
-          rescue Rlagoon::ClientError => e
+          rescue Rlint::ClientError => e
             e.message.should == "400 - Client Error"
           else
-            fail "Expected Rlagoon::ClientError exception to be raised."
+            fail "Expected Rlint::ClientError exception to be raised."
           end
         end
       end
       it "should raise ClientError exception if code received 403" do
-        Rlagoon::Lagoon.publicize_methods do
+        Rlint::Lagoon.publicize_methods do
           begin
             @lagoon.handle_code("403","test","test")
-          rescue Rlagoon::ClientError => e
+          rescue Rlint::ClientError => e
             e.message.should == "403 - Client Error"
           else
-            fail "Expected Rlagoon::ClientError exception to be raised."
+            fail "Expected Rlint::ClientError exception to be raised."
           end
         end
       end
       it "should raise ClientError exception if code received 409" do
-        Rlagoon::Lagoon.publicize_methods do
+        Rlint::Lagoon.publicize_methods do
           begin
             @lagoon.handle_code("409","test","test")
-          rescue Rlagoon::ClientError => e
+          rescue Rlint::ClientError => e
             e.message.should == "409 - Client Error"
           else
-            fail "Expected Rlagoon::ClientError exception to be raised."
+            fail "Expected Rlint::ClientError exception to be raised."
           end
         end
       end
       it "should raise ServerError exception if code received 500" do
-        Rlagoon::Lagoon.publicize_methods do
+        Rlint::Lagoon.publicize_methods do
           begin
             @lagoon.handle_code("500","test","test")
-          rescue Rlagoon::ServerError => e
+          rescue Rlint::ServerError => e
             e.message.should == "500 - Server Error"
           else
-            fail "Expected Rlagoon::ServerError exception to be raised."
+            fail "Expected Rlint::ServerError exception to be raised."
           end
         end
       end
       it "should raise ServerError exception if code received 503" do
-        Rlagoon::Lagoon.publicize_methods do
+        Rlint::Lagoon.publicize_methods do
           begin
             @lagoon.handle_code("503","test","test")
-          rescue Rlagoon::ServerError => e
+          rescue Rlint::ServerError => e
             e.message.should == "503 - Server Error"
           else
-            fail "Expected Rlagoon::ServerError exception to be raised."
+            fail "Expected Rlint::ServerError exception to be raised."
           end
         end
       end

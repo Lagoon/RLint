@@ -1,23 +1,23 @@
 require "httparty"
 require "rails"
-require "rlagoon/version"
-require "rlagoon/application_operations"
-require "rlagoon/profile_operations"
-require "rlagoon/permission_operations"
-require "rlagoon/context_operations"
-require "rlagoon/user_operations"
-require "rlagoon/lagoon"
-require "rlagoon/exceptions"
-require "rlagoon/controller_additions"
-require "rlagoon/controller_resource"
+require "rlint/version"
+require "rlint/application_operations"
+require "rlint/profile_operations"
+require "rlint/permission_operations"
+require "rlint/context_operations"
+require "rlint/user_operations"
+require "rlint/lagoon"
+require "rlint/exceptions"
+require "rlint/controller_additions"
+require "rlint/controller_resource"
 
-module Rlagoon
+module Rlint
   
   # To set env that runs. If test not print messages on STDOUT.
   mattr_accessor :env
   
   # To set a default_options, just call 
-  # Rlagoon.config= {:base_uri => <uri>, 
+  # Rlint.config= {:base_uri => <uri>, 
                    # :username => <username>, 
                    # :password => <password>,
                    # :switch => <true/false>}
@@ -27,7 +27,7 @@ module Rlagoon
     if @default_options.nil?
       @default_options[:switch] = false
     elsif @default_options[:switch]
-      Rlagoon.load_lagoon.sanity_check!
+      Rlint.load_lagoon.sanity_check!
     end
   end
   
@@ -74,16 +74,16 @@ module Rlagoon
     
     protected
     def load_lagoon(options = nil)
-      Rlagoon.load_lagoon(options)
+      Rlint.load_lagoon(options)
     end
     
     def lagoon_authorization(u_id, options = nil)
-      Rlagoon.lagoon_authorization(self, options, u_id)
+      Rlint.lagoon_authorization(self, options, u_id)
     end
   end
 end
 
 if defined? ActionController
-  ActionController::Base.send :include, Rlagoon::Controller
+  ActionController::Base.send :include, Rlint::Controller
 end
 

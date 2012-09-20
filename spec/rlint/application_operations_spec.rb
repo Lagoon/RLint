@@ -3,13 +3,13 @@ require 'spec_helper'
 describe "On application operations module" do
   
   before(:each) do
-    Rlagoon.config = {
+    Rlint.config = {
             :base_uri => @lagoon_credentials[:url]  , #Write lagoon base URI
             :username => @lagoon_credentials[:username], #Write lagoon username
             :password => @lagoon_credentials[:password], # Write Lagoon password
             :switch => true
     }
-    @lagoon = Rlagoon.load_lagoon
+    @lagoon = Rlint.load_lagoon
   end
   
   describe "try show application" do

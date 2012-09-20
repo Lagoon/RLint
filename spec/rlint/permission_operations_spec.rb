@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "permissions operations module" do
 
   before(:each) do
-    Rlagoon.config = {
+    Rlint.config = {
             :base_uri => @lagoon_credentials[:url] , #Write lagoon base URI
             :username => @lagoon_credentials[:username], #Write lagoon username
             :password => @lagoon_credentials[:password], # Write Lagoon password
@@ -14,7 +14,7 @@ describe "permissions operations module" do
   
   describe "with context" do
     before(:each) do
-      @lagoon = Rlagoon.load_lagoon({:context => "test"})
+      @lagoon = Rlint.load_lagoon({:context => "test"})
       @lagoon.create_context("test","http://test.lvh.me:3000/activations","http://test.lvh.me:3000","Description",true)
     end
     

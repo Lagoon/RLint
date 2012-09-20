@@ -1,4 +1,4 @@
-module Rlagoon
+module Rlint
 
  class Error < StandardError; end
  

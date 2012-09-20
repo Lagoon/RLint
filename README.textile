@@ -18,11 +18,11 @@ h3. Instalation
 
 First add the gem to your development environment and run the @bundle@ command to install it.
 
-@gem "rlagoon"@
+@gem "rlint"@
 
 h3. Generate Lagoon configuration file
 
-To add Rlint configuration file to your @/config/initializers/@ folder run @rails g rlagoon:config@.
+To add Rlint configuration file to your @/config/initializers/@ folder run @rails g rlint:config@.
 Update config options with credentials and uri provided by XLM - Innovation & Technology.
 
 h3. How to use?
@@ -530,15 +530,15 @@ h2. Handle exceptions
 	
 h3. SanityProblem
 
-If credentials present on config file, or first connection to Lagoon® fails, a Rlagoon::SanityProblem exception will be raised on application start.
+If credentials present on config file, or first connection to Lagoon® fails, a Rlint::SanityProblem exception will be raised on application start.
 
 h3. ClientError
 
-If any problem was detected on client request (ex: wrong attributes sent) Lagoon® will sent a client error on http status code. Rlagoon will raise a Rlagoon::ClientError exception. You can catch this and modify it behavior in ApplicationController.
+If any problem was detected on client request (ex: wrong attributes sent) Lagoon® will sent a client error on http status code. Rlint will raise a Rlint::ClientError exception. You can catch this and modify it behavior in ApplicationController.
 
 <pre>
 class ApplicationController < ActionController::Base 
-	rescue from Rlagoon::ClientError do |exception|
+	rescue from Rlint::ClientError do |exception|
 		redirect_to root_url, :alert => "some alert"
 	end
 end
@@ -546,11 +546,11 @@ end
 
 h3. ServerError
 
-If any problem occur on server (ex: internal server error) Rlint will raise a Rlagoon::ServerError exception. You can catch this and modify it behavior in ApplicationController
+If any problem occur on server (ex: internal server error) Rlint will raise a Rlint::ServerError exception. You can catch this and modify it behavior in ApplicationController
 
 <pre>
 class ApplicationController < ActionController::Base 
-	rescue from Rlagoon::ServerError do |exception|
+	rescue from Rlint::ServerError do |exception|
 		redirect_to root_url, :alert => "some alert"
 	end
 end
@@ -559,11 +559,11 @@ end
 
 h3. AccessDenied
 
-If you user "load_authorization" helper method and current user cannot access some action, a Rlagoon::AccessDenied exception will be raised. You can catch this and modify it behavior in ApplicationController
+If you user "load_authorization" helper method and current user cannot access some action, a Rlint::AccessDenied exception will be raised. You can catch this and modify it behavior in ApplicationController
 
 <pre>
 class ApplicationController < ActionController::Base
-	rescue from Rlagoon::AccessDenied do |exception|
+	rescue from Rlint::AccessDenied do |exception|
 		redirect_to root_url, :alert => "some alert"
 	end
 end
