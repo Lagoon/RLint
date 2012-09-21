@@ -3,7 +3,6 @@ module Rlint
   
     def profiles
       response = do_get("#{with_context}/profiles")
-      p response
       handle_code(response.response.code,"list","profiles")
       json = response.parsed_response
       result = {:profiles => parse_profiles(json)}

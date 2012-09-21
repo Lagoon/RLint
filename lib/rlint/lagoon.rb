@@ -34,17 +34,11 @@ module Rlint
     # =>  
     # => SANITY_CHECK
     # => This method execute sanity test to credentials submitted on Rlint.config
-    # => Input options:
-    # =>        :version - to verify version compatibility
     # => Output (Hash):
     # =>        :message => "Message returned from lagoon" (String)
     # => 
-    def sanity_check!(options = nil)
-      if options.nil?
-        response = do_get("/sanitycheck")
-      else
-        response = do_get("/sanitycheck/#{options[:version]}")
-      end
+    def sanity_check!
+      response = do_get("/sanitycheck")
       json = response.parsed_response
       if json["sanity"]
         say_info(json["message"])

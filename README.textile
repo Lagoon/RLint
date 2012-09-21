@@ -1,11 +1,11 @@
-h1. Gem RLint - RoR Lagoon® Interface Connector
+h1. Gem RLint - RoR Lagoon® Security Interface Connector
 
-Rlint is a connector module to LagoonSecurity application, which is an authentication/autorization system developed by XLM - Innovation & Technology. 
+Rlint is a connector module to Lagoon® Security application, which is an authentication/autorization system developed by "XLM - Innovation & Technology":http://xlm.pt. 
 It allows you to easily manage your applications authentication and autorization.
 
 h2. Getting Started
 
-Rlint is a library to connect your application with XLM - Innovation & Technology Lagoon® Application RESTful API.
+Rlint is a library to connect your application with "XLM - Innovation & Technology":http://xlm.pt Lagoon® Security Application RESTful API.
 
 h3. Depedencies
 
@@ -20,10 +20,10 @@ First add the gem to your development environment and run the @bundle@ command t
 
 @gem "rlint"@
 
-h3. Generate Lagoon configuration file
+h3. Generate Lagoon® Security configuration file
 
 To add Rlint configuration file to your @/config/initializers/@ folder run @rails g rlint:config@.
-Update config options with credentials and uri provided by XLM - Innovation & Technology.
+Update config options with credentials and uri provided by "Lagoon® Security":http://lagoon.pt/lagoonsecurity.
 
 h3. How to use?
 
@@ -68,24 +68,16 @@ Output Example:
 
 <pre>
 {:application =>
-	{:id=>5, 
-	 :application=>"application_name", 
-	 :modules=>["module_1","module_2"], 
-	 :activation_url=>"http://environment.activation.url.com", 
-	 :description=>"Environment description", 
-	 :name=>"environment_name"}
-}
+  {:name=>"RLint eSaaS", 
+   :description=>"Rails Connector Test", 
+   :environment =>
+    {:activation_url=>"http://test.lvh.me/activations", 
+     :url=>"http://test.lvh.me", 
+     :description=>"Test Environment", 
+     :notify=>true, 
+     :name=>"Test"}
+  }}
 </pre>
-
-h4. Update application "update_application(name,activation_url = nil,description = nil)"
-
-Update your environment/application information.
-This method expects 4 attributes:
-
-* name* (string): application name.
-* activation_url (string): environment activation URL.
-* url (string): environment url.
-* description (text): environment description.
 
 h3. Context operations
 
@@ -217,7 +209,7 @@ h3. Permission operations
 
 h4. Permission operations "permissions(id_u)"
 
-Get user actual permissions from Lagoon®. 
+Get user actual permissions from Lagoon® Security. 
 This method expects 1 attribute: 
 
 * id_u* (integer): user id.
@@ -530,11 +522,11 @@ h2. Handle exceptions
 	
 h3. SanityProblem
 
-If credentials present on config file, or first connection to Lagoon® fails, a Rlint::SanityProblem exception will be raised on application start.
+If credentials present on config file, or first connection to Lagoon® Security fails, a Rlint::SanityProblem exception will be raised on application start.
 
 h3. ClientError
 
-If any problem was detected on client request (ex: wrong attributes sent) Lagoon® will sent a client error on http status code. Rlint will raise a Rlint::ClientError exception. You can catch this and modify it behavior in ApplicationController.
+If any problem was detected on client request (ex: wrong attributes sent) Lagoon® Security will sent a client error on http status code. Rlint will raise a Rlint::ClientError exception. You can catch this and modify it behavior in ApplicationController.
 
 <pre>
 class ApplicationController < ActionController::Base 
@@ -571,4 +563,4 @@ end
 
 enjoy ;)
 
-For more info, please visit LagoonSecurity website!
+For more info, please visit "Lagoon® Security":http://lagoon.pt/lagoonsecurity website!

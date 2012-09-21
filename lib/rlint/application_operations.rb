@@ -10,11 +10,16 @@ module Rlint
     end
     
     def parse_application(json)
-      result = {:id => json["id"],
-                :application => json["application"]["name"],
-                :activation_url => json["activationUrl"],
+      result = {:name => json["application"]["name"],
+                :description => json["application"]["description"],
+                :environment => parse_environment(json)}
+    end
+    
+    def parse_environment(json)
+      result = {:activation_url => json["activationUrl"],
                 :url => json["url"],
                 :description => json["description"],
+                :notify => json["notify"],
                 :name => json["name"]}
     end
     
