@@ -561,6 +561,11 @@ class ApplicationController < ActionController::Base
 end
 </pre>
 
+h1. License
+
+RLint is distributed under an "Apache 2.0 License":http://www.apache.org/licenses/LICENSE-2.0
+
+
 enjoy ;)
 
 For more info, please visit "Lagoon® Security":http://lagoon.pt/lagoonsecurity website!
